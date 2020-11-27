@@ -1,0 +1,25 @@
+{% extends 'Base.html' %}
+
+{% block title %}Добавление базы{% endblock %}
+
+{% block name_content %}<h1>##Загрузка базы контактов##</h1>{% endblock %}
+
+
+
+{% block content %}
+<h2>Заполните форму:</h2>
+<br>
+
+<form method="post" action="" >
+    {% csrf_token %}
+    {{base_form.as_p}}
+
+    <hr>
+    <button type="submit">Отправить</button>
+
+
+
+</form>
+
+
+{% endblock %}
