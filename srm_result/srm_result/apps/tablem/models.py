@@ -20,22 +20,6 @@ Django + sqlite\ posgresql + шаблонизаторы + хороший код
 '''
 
 
-class BaseMain(models.Model):
-    '''
-    Контактная база
-    '''
-
-    base = models.TextField()
-
-    def __str__(self):
-        return '%s' % self.id
-
-    class Meta:
-        verbose_name = '<База контактов>'
-        verbose_name_plural = '<Базы контактов>'
-
-
-
 class BaseInter(models.Model):
     '''
     Характеристики контактной базы
@@ -46,7 +30,7 @@ class BaseInter(models.Model):
     date = models.DateField('Дата загрузки')
     project = models.CharField('Название проекта', max_length=60)
     price = models.PositiveIntegerField('Стоимость базы')
-    amount_total = models.PositiveIntegerField('Кол-во всех контактов')
+    amount_total = models.PositiveIntegerField('Кол-во всех контактов', null=True)
     amount_used = models.PositiveIntegerField('Кол-во использованных контактов', null=True)
     amount_left = models.PositiveIntegerField('Кол-во оставшихся контактов', null=True)
 
@@ -56,9 +40,9 @@ class BaseInter(models.Model):
     name_accountable = models.CharField('Имя ответственного', max_length=60)
     status = models.BooleanField('Статус', default=False)
     comment = models.CharField('Комментарий', max_length=200, null=True)
-    number_price = models.FloatField('Стоимость одного номера')
+    number_price = models.FloatField('Стоимость одного номера', null=True)
 
-    link = models.OneToOneField(BaseMain, on_delete=models.CASCADE)
+    link = models.FileField('link', upload_to='documents/')
 
 
 
@@ -66,8 +50,26 @@ class BaseInter(models.Model):
         return '%s (%s)' % (self.project, self.link)
 
     class Meta:
-        verbose_name = 'Характеристика базы'
-        verbose_name_plural = 'Характеристики баз'
+        verbose_name = 'Контактная База'
+        verbose_name_plural = 'Контактные Базы'
 
 
+class BaseMain(models.Model):
+    '''
+    Контакты
+    Какие поля у контакта?
+    '''
 
+    base = models.ForeignKey(BaseInter, on_delete=models.CASCADE, related_name='contacts')
+
+    name = models.CharField('Имя', max_length=60, null=True)
+    email = models.EmailField('email', null=True)
+    telephon = models.CharField('Номер телефона', max_length=60, null=True)
+    comment = models.TextField('Комментарий', null=True)
+
+    def __str__(self):
+        return '%s' % self.id
+
+    class Meta:
+        verbose_name = '<Контакт>'
+        verbose_name_plural = '<Контакты>'

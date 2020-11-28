@@ -12,11 +12,7 @@ import datetime
 class DateInput(forms.DateInput):
     input_type = 'date'
 
-
-
 class BaseInterForm(ModelForm):
-
-    link = forms.FileField()
 
 
     class Meta:
@@ -31,7 +27,14 @@ class BaseInterForm(ModelForm):
 
     def save(self, *args, **kwargs):
 
+        # ... обработка файла базы
+
         super(BaseInterForm, self).save(self, *args, **kwargs)
+
+
+
+
+
 
 
 

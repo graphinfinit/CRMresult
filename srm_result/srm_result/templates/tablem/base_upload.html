@@ -10,7 +10,7 @@
 <h2>Заполните форму:</h2>
 <br>
 
-<form method="post" action="" >
+<form enctype="multipart/form-data" method="post" action="" >
     {% csrf_token %}
     {{base_form.as_p}}
 

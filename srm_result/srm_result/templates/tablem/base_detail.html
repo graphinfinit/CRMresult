@@ -1,0 +1,71 @@
+{% extends 'Base.html' %}
+
+{% block title %}Все базы{% endblock %}
+
+{% block name_content %}<h1>##Все базы##</h1>{% endblock %}
+
+
+
+{% block content %}
+
+<a href="{% url "base_upload"%} ">#загрузить новую базу</a>
+<hr>
+
+
+<form action="{% url 'show_bases' %}" method="get">
+    Фильтрация по текстовым полям.
+    <input name="qwery" type="text" placeholder="Поиск...">
+    По дате.
+    От<input name="date_start" type="date">
+    до<input name="date_end" type="date">
+    <button type="submit">Ok</button>
+</form>
+
+<hr>
+<table class="basket_table">
+                            <thead>
+                                <tr>
+                                    {% for field in fields %}
+                                    <th>{{field.verbose_name}}</th>
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for base in bases %}
+                                    <tr>
+                                        <td></td>
+                                        <td>{{base.id}}</td>
+										<td>{{base.date}}</td>
+                                        <td>{{ base.project }}</td>
+                                        <td>{{ base.price }}</td>
+                                        <td>{{ base.amount_total }}</td>
+                                        <td>{{base.amount_used}}</td>
+										<td>{{base.amount_left}}</td>
+                                        <td>{{base.source}}</td>
+										<td>{{base.source_params}}</td>
+                                        <td>{{base.name_accountable}}</td>
+										<td>{{base.status}}</td>
+                                        <td>{{base.comment}}</td>
+										<td>{{base.number_price}}</td>
+                                        <td>{{base.link}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    <hr>
+
+
+
+{% for field in fields %}
+{{field.name}}
+{% endfor %}
+
+
+
+
+
+
+{% endblock %}
+
+
